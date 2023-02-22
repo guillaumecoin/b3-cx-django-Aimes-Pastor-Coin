@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import ReservationForm
+from django.http import HttpResponse
 
 #Requete du formulaire
 
@@ -12,4 +13,6 @@ def reservation(request):
         else:
             form = ReservationForm()
         return render(request, 'reservation.html', {'form': form})
-    
+
+def index(request):
+    return HttpResponse("Hello World !")
