@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
+from .models import Ecole
 #Requete du formulaire
 
 def reservation(request):
@@ -23,3 +24,8 @@ def index(request):
 def login(request):
     form = AuthenticationForm()
     return render(request, 'appResa/login.html', {'form': form})
+
+def accueil(request):
+    ecoles = Ecole.objects.filter(disponible=True)
+    context = {'ecoles': ecoles}
+    return render(request, 'appResa/accueil.html', context)

@@ -9,3 +9,12 @@ class Reservation(models.Model):
     def __str__(self):
         return self.nom
 
+class Ecole(models.Model):
+    nom = models.CharField(max_length=100)
+    adresse = models.CharField(max_length=200)
+    ville = models.CharField(max_length=100)
+    description = models.TextField()
+    disponible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nom

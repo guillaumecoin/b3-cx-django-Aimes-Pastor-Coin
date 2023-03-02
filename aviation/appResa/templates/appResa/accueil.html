@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <head>
+
+    </head>
+
+    <body>
+    <div class="container">
+        <h1 class="text-center mb-5">Liste des écoles disponibles à la réservation</h1>
+        <div class="row">
+            {% for ecole in ecoles %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ecole.nom }}</h5>
+                        <p class="card-text">{{ ecole.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ ecole.adresse }}</li>
+                        <li class="list-group-item">{{ ecole.ville }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Réserver</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-12">
+                <p>Aucune école disponible à la réservation pour le moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>

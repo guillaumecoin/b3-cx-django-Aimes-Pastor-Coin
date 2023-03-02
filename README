@@ -1,0 +1,6 @@
+// Ajouter des données en base de données
+python manage.py shell
+from nomApp.models import class
+nom = Class.objects.get(id=1)
+nom.delete()
+exit()
