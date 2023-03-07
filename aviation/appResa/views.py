@@ -26,12 +26,15 @@ def index(request):
 def login_vue(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
+        # initalisation du formulaire
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
+            #verification des mots de passe et identifiant
             if user is not None:
                 login(request, user)
+                #enregistre l'utilisateur
                 return redirect('accueil')
             else:
                 form.add_error(None, 'incorrect')
@@ -41,5 +44,16 @@ def login_vue(request):
 
 def accueil(request):
     ecoles = Ecole.objects.filter(disponible=True)
-    context = {'ecoles': ecoles}
+    username = None
+    if request.user.is_authenticated:
+        #verifie si l'user est authentifie
+        username = request.user.username
+    #faire passer toutes les infos dans context
+    context = {'ecoles': ecoles,'username': username}
     return render(request, 'appResa/accueil.html', context)
+
+def redirectVuePerso(request):
+    return redirect('reservationP')
+
+def reservationP(request):
+    return HttpResponse("Hello reserve!")

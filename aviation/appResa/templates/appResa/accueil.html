@@ -1,33 +1,142 @@
 <!DOCTYPE html>
-    <head>
 
-    </head>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 
-    <body>
+        body {
+            background: linear-gradient(90deg,
+                    rgba(69, 87, 266, 0.9),
+                    rgba(196, 80, 193, 1));
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        h1 {
+            padding: 1rem;
+            color: #fff;
+            text-align: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .title-underline {
+            width: 200px;
+            border: 3px solid white;
+            position: absolute;
+            top: 47%;
+            right: 43%;
+            border-radius: 7px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center
+        }
+
+        table thead {
+            font-family: 'Lobster', cursive;
+            background-color: #000;
+            color: #fff;
+            font-size: 1.5rem;
+
+        }
+
+        table th {
+            border: 2px solid #ddd;
+            padding: 14px 12px;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+
+        }
+
+        table tbody td {
+            border: 2px solid #ddd;
+            /*    padding: 15px 12px;*/
+            color: #fff;
+            font-size: 18px;
+        }
+
+
+        table tr:nth-child(even) {
+            background-color: rgba(237, 237, 237, 0.5);
+        }
+
+        table tr:hover {
+            background-color: #36314A;
+        }
+
+
+
+        table tbody td a {
+            display: block;
+            padding: 10px;
+            /*IMPORTANT: padding just for a 
+    so we fill all the A:link cell
+    (delete the padding for td)*/
+            text-decoration: none;
+            color: #fff;
+
+        }
+
+        table tbody td a:hover {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'reservationP' %}">
+        <button>Voir mes réservations</button>
+    </a>
+
+    {% if username %}
+    <p>Bienvenue, {{ username }}!</p>
+{% else %}
+    <p>Vous n'êtes pas connecté.</p>
+{% endif %}
+
     <div class="container">
-        <h1 class="text-center mb-5">Liste des écoles disponibles à la réservation</h1>
-        <div class="row">
-            {% for ecole in ecoles %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ ecole.nom }}</h5>
-                        <p class="card-text">{{ ecole.description }}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{ ecole.adresse }}</li>
-                        <li class="list-group-item">{{ ecole.ville }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Réserver</a>
-                    </div>
+        <h1>Liste des écoles disponibles à la réservation</h1>
+        <div class="title-underline"></div>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for ecole in ecoles %}
+                    <td>{{ ecole.nom }}</td>
+                    <td>{{ ecole.description }}</td>
+                    <td>{{ ecole.adresse }}</td>
+                    <td>{{ ecole.ville }}</td>
+                    <td>
+                        <a href="#">Réserver</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <div class="col-md-12">
+                    <p>Aucune école disponible à la réservation pour le moment.</p>
                 </div>
-            </div>
-            {% empty %}
-            <div class="col-md-12">
-                <p>Aucune école disponible à la réservation pour le moment.</p>
-            </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
     </div>
 </body>
