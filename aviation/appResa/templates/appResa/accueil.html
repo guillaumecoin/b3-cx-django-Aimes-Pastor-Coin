@@ -126,7 +126,7 @@
                     <td>{{ ecole.adresse }}</td>
                     <td>{{ ecole.ville }}</td>
                     <td>
-                        <a href="#">Réserver</a>
+                        <a href="{% url 'reserver' %}">Réserver</a>
                     </td>
                 </tr>
                 {% empty %}

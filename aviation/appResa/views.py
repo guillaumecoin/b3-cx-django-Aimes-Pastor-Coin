@@ -57,3 +57,6 @@ def redirectVuePerso(request):
 
 def reservationP(request):
     return HttpResponse("Hello reserve!")
+
+def reserver(request):
+    return redirect('reservationP')

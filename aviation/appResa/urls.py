@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.login_vue, name='login'),
     path('accueil/', views.accueil, name='accueil'),
     path('reservationP/', views.reservationP, name='reservationP'),
+    path('reserver/', views.reserver, name='reserver')
 ]

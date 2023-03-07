@@ -1,11 +1,52 @@
-{% block content %}
-  <a>Username : user1  Password: user1</a>
-  <a>Username : user2  Password: user2</a>
+<head>
+  <style>
+    
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+input{
+  display:block;
+  width:100%;
+  padding:.2em;
+  margin: .2em 0 .6em;
+  font-size:1.2em;
+}
+input[type=submit]{
+  background: salmon;
+  border:none;
+  margin:1em 0;
+  color:white;
+  padding:1em;
+}
+.message{
+  background: blanchedalmond;
+  padding: 1em .5em;
+  margin: 1em 0;
+}
+
+
+/* Presentational for this pen */
+html{
+  background: darkturquoise;
+}
+body{
+  padding:5%;
+  background: white;
+  max-width:30em;
+  margin: 6% auto;
+  box-shadow:1em 1em 0 0 rgba(0,0,0,.2);
+  font-family:Raleway, sans-serif;
+}
+  </style>
+</head>
   <h2>Connexion</h2>
-  
-  <form method="post">
+  <form method="post" class="login-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Se connecter</button>
+    <input type="submit" value="Log In">
+  <input type="hidden" name="did_login" value="true">
+    <!-- <button type="submit">Se connecter</button> -->
   </form>
-{% endblock %}
