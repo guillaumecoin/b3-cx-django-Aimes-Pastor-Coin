@@ -94,7 +94,7 @@
 </head>
 
 <body>
-    <a href="{% url 'reservationP' %}">
+    <a href="{% url 'mes_reservations' %}">
         <button>Voir mes réservations</button>
     </a>
 
@@ -115,19 +115,32 @@
                     <th>Description</th>
                     <th>Adresse</th>
                     <th>Ville</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Nombres de personnes</th>
                     <th>Reservation</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     {% for ecole in ecoles %}
+                    <form method="post" action="{% url 'reserver'%}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                       
+                    
                     <td>{{ ecole.nom }}</td>
                     <td>{{ ecole.description }}</td>
                     <td>{{ ecole.adresse }}</td>
                     <td>{{ ecole.ville }}</td>
-                    <td>
-                        <a href="{% url 'reserver' %}">Réserver</a>
-                    </td>
+                    <td><input type="date" name="date_arrivee"></td>
+                    <td><input type="date" name="date_depart"></td>
+                    <td><input type="number" name="nombre_personnes"></td>
+                    <input type="hidden" name="nom_ecole" value="{{ ecole.nom }}">
+                    <input type="hidden" name="nom_client" value="{{ username }}">
+                    <td> <button type="submit">Envoyer</button></td>
+                    </form>
+                   
                 </tr>
                 {% empty %}
                 <div class="col-md-12">

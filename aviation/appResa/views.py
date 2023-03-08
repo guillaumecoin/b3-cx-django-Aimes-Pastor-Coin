@@ -1,23 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import ReservationForm
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
-from .models import Ecole
-from .forms import LoginForm
+from .models import Ecole,Reservation
+from .forms import LoginForm,ReservationForm
 #Requete du formulaire
-
-def reservation(request):
-    if request.method == 'POST':
-        form = ReservationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'reservation_confirm.html')
-        else:
-            form = ReservationForm()
-        return render(request, 'appResa/reservation.html', {'form': form})
 
 def index(request):
     return HttpResponse("Hello World !")
@@ -28,8 +16,8 @@ def login_vue(request):
         form = LoginForm(request.POST)
         # initalisation du formulaire
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = request.POST.get('username')
+            password = request.POST.get('password')
             user = authenticate(request, username=username, password=password)
             #verification des mots de passe et identifiant
             if user is not None:
@@ -43,7 +31,9 @@ def login_vue(request):
     return render(request, 'appResa/login.html', {'form': form})
 
 def accueil(request):
-    ecoles = Ecole.objects.filter(disponible=True)
+    #recupere les ecole disponible
+    # ecoles = Ecole.objects.filter(disponible=True)
+    ecoles = Ecole.objects.all()
     username = None
     if request.user.is_authenticated:
         #verifie si l'user est authentifie
@@ -52,11 +42,27 @@ def accueil(request):
     context = {'ecoles': ecoles,'username': username}
     return render(request, 'appResa/accueil.html', context)
 
-def redirectVuePerso(request):
-    return redirect('reservationP')
 
-def reservationP(request):
-    return HttpResponse("Hello reserve!")
+
+def mes_reservations(request):
+    reservations = Reservation.objects.filter(nom_client=request.user.username)
+    context = {'reservations': reservations}
+    return render(request, 'appResa/mes_reservations.html', context)
+
+
 
 def reserver(request):
-    return redirect('reservationP')
+    #recupérer l'ecole avec son id
+    # ecole = get_object_or_404(Ecole, pk=ecole_id)
+    if request.method == 'POST':
+            nom_ecole = request.POST.get('nom_ecole')
+            date_arrivee = request.POST.get('date_arrivee')
+            date_depart = request.POST.get('date_depart')
+            nom_client = request.POST.get('nom_client')
+            nombre_personnes = request.POST.get('nombre_personnes')
+            #si form valid enregistrer la reservation
+            Reservation.objects.create(nom_client=nom_client,nom_ecole=nom_ecole,date_arrivee=date_arrivee,date_depart=date_depart, nombre_personnes=nombre_personnes)
+            return HttpResponse("Ajouté")
+            # return redirect('mes_reservations')
+    else:
+        return redirect('mes_reservations')
