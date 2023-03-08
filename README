@@ -1,9 +1,5 @@
-// Ajouter des données en base de données
-python manage.py shell
-from nomApp.models import class
-nom = Class.objects.get(id=1)
-nom.delete()
-exit()
 
 //pour afficher l'application
 http://127.0.0.1:8000/appResa/
+
+
