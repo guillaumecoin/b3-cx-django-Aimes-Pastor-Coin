@@ -102,11 +102,9 @@
       <tr>
         <th>Identifiant de réservation</th>
         <th>Nom de l'école</th>
-        <th>Nom de client</th>
         <th>Date de début</th>
         <th>Date de fin</th>
         <th>Nombre de personnes</th>
-        <th>Supprimer</th>
       </tr>
     </thead>
     <tbody>
@@ -114,15 +112,9 @@
         <tr>
           <td>{{ reservation.id }}</td>
           <td>{{ reservation.nom_ecole }}</td>
-          <td>{{ reservation.nom_client }}</td>
           <td>{{ reservation.date_arrivee }}</td>
           <td>{{ reservation.date_depart }}</td>
           <td>{{ reservation.nombre_personnes }}</td>
-          <td><form method="POST" action="{% url 'supprimer_ecole' reservation.id %}">
-            {% csrf_token %}
-            <button type="submit">Supprimer</button>
-        </form>
-        </td>
         </tr>
       {% endfor %}
     </tbody>

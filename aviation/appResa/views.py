@@ -5,7 +5,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.csrf import csrf_protect
 from .models import Ecole,Reservation
 from .forms import LoginForm,ReservationForm
+from django.views.decorators.http import require_POST
+
 #Requete du formulaire
+
+
+
+@require_POST
+def supprimer_ecole(request, reservation_id):
+    ecole = get_object_or_404(Reservation, pk=reservation_id)
+    ecole.delete()
+    return redirect('mes_reservations')
 
 def index(request):
     return HttpResponse("Hello World !")
@@ -43,6 +53,11 @@ def accueil(request):
     return render(request, 'appResa/accueil.html', context)
 
 
+
+def mes_reservations(request):
+    reservations = Reservation.objects.filter(nom_client=request.user.username)
+    context = {'reservations': reservations}
+    return render(request, 'appResa/mes_reservations.html', context)
 
 def mes_reservations(request):
     reservations = Reservation.objects.filter(nom_client=request.user.username)
