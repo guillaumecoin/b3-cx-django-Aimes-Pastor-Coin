@@ -20,6 +20,10 @@ def supprimer_ecole(request, reservation_id):
 def index(request):
     return HttpResponse("Hello World !")
 
+def reservationEcole(request, nom_ecole):
+    reservations = Reservation.objects.filter(nom_ecole=nom_ecole)
+    context = {'reservations': reservations}
+    return render(request, 'appResa/reservationsEcole.html', context)
 
 def login_vue(request):
     if request.method == 'POST':
