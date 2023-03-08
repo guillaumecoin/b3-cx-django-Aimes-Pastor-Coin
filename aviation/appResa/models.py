@@ -1,13 +1,5 @@
 from django.db import models
 
-class Reservation(models.Model):
-    nom = models.CharField(max_length=100)
-    date_arrivee = models.DateField()
-    date_depart = models.DateField()
-    nombre_personnes = models.IntegerField()
-    
-    def __str__(self):
-        return self.nom
 
 class Ecole(models.Model):
     nom = models.CharField(max_length=100)
@@ -18,3 +10,12 @@ class Ecole(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+
+class Reservation(models.Model):
+    nom_ecole = models.CharField(max_length=100,default='ecole1')
+    nom_client = models.CharField(max_length=100)
+    date_arrivee = models.DateField()
+    date_depart = models.DateField()
+    nombre_personnes = models.IntegerField()
